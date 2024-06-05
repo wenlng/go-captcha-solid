@@ -1,6 +1,6 @@
 {
   "name": "go-captcha-solid",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "This is the solid package for go-captcha",
   "main": "dist/go-captcha-solid.cjs.js",
   "module": "dist/go-captcha-solid.esm.js",
