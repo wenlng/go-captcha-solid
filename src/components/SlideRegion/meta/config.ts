@@ -1,10 +1,10 @@
 /**
  * @Author Awen
- * @Date 2024/05/25
+ * @Date 2024/06/01
  * @Email wengaolng@gmail.com
  **/
 
-export interface CaptchaConfig {
+export interface SlideConfig {
   width?: number;
   height?: number;
   verticalPadding?: number;
@@ -13,7 +13,7 @@ export interface CaptchaConfig {
   title?: string;
 }
 
-export const defaultConfig = ():CaptchaConfig => ({
+export const defaultConfig = ():SlideConfig => ({
   width: 300,
   height: 220,
   verticalPadding: 16,

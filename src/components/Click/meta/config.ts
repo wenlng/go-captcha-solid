@@ -4,7 +4,7 @@
  * @Email wengaolng@gmail.com
  **/
 
-export interface CaptchaConfig {
+export interface ClickConfig {
   width?: number;
   height?: number;
   thumbWidth?: number;
@@ -16,7 +16,7 @@ export interface CaptchaConfig {
   buttonText?: string;
 }
 
-export const defaultConfig = ():CaptchaConfig => ({
+export const defaultConfig = ():ClickConfig => ({
   width: 300,
   height: 220,
   thumbWidth: 150,

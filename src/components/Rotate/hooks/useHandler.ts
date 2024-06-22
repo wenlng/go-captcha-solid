@@ -1,17 +1,17 @@
 /**
  * @Author Awen
- * @Date 2024/05/25
+ * @Date 2024/06/01
  * @Email wengaolng@gmail.com
  **/
 
-import {CaptchaData} from "../meta/data";
-import {CaptchaEvent} from "../meta/event";
+import {RotateData} from "../meta/data";
+import {RotateEvent} from "../meta/event";
 import {checkTargetFather} from "../../../helper/helper";
 import {createSignal} from "solid-js";
 
 export const useHandler = (
-  data: CaptchaData,
-  event: CaptchaEvent,
+  data: RotateData,
+  event: RotateEvent,
 ) => {
   let dragBlockRef: HTMLDivElement
   let dragBarRef: HTMLDivElement

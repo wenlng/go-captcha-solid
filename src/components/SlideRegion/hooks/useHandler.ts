@@ -1,22 +1,22 @@
 /**
  * @Author Awen
- * @Date 2024/05/25
+ * @Date 2024/06/01
  * @Email wengaolng@gmail.com
  **/
 
-import {CaptchaData, CaptchaPoint} from "../meta/data";
-import {CaptchaEvent} from "../meta/event";
+import {SlideData, SlidePoint} from "../meta/data";
+import {SlideEvent} from "../meta/event";
 import {checkTargetFather} from "../../../helper/helper";
 import {createStore} from "solid-js/store";
 
 export const useHandler = (
-  data: CaptchaData,
-  event: CaptchaEvent,
+  data: SlideData,
+  event: SlideEvent,
 ) => {
   let containerRef: HTMLDivElement
   let tileRef: HTMLDivElement
   
-  const [thumbPoint, setThumbPoint] = createStore<CaptchaPoint>({x: data.thumbX || 0, y: data.thumbY || 0})
+  const [thumbPoint, setThumbPoint] = createStore<SlidePoint>({x: data.thumbX || 0, y: data.thumbY || 0})
 
   const clear = () => {
     setThumbPoint({x: data.thumbX || 0, y: data.thumbY || 0})

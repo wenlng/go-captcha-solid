@@ -1,17 +1,17 @@
 /**
  * @Author Awen
- * @Date 2024/05/25
+ * @Date 2024/06/01
  * @Email wengaolng@gmail.com
  **/
 
-import {CaptchaData} from "../meta/data";
-import {CaptchaEvent} from "../meta/event";
+import {SlideData} from "../meta/data";
+import {SlideEvent} from "../meta/event";
 import {checkTargetFather} from "../../../helper/helper";
 import {createSignal} from "solid-js";
 
 export const useHandler = (
-  data: CaptchaData,
-  event: CaptchaEvent
+  data: SlideData,
+  event: SlideEvent
 ) => {
   let containerRef: HTMLDivElement
   let tileRef: HTMLDivElement

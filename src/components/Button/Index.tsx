@@ -1,14 +1,20 @@
-import {CaptchaConfig, defaultConfig} from "./meta/config";
+/**
+ * @Author Awen
+ * @Date 2024/06/01
+ * @Email wengaolng@gmail.com
+ **/
+
+import {ButtonConfig, defaultConfig} from "./meta/config";
 import BtnDefaultIcon from "../../assets/icons/BtnDefaultIcon";
 import BtnErrorIcon from "../../assets/icons/BtnErrorIcon";
 import BtnWarnIcon from "../../assets/icons/BtnWarnIcon";
 import BtnSuccessIcon from "../../assets/icons/BtnSuccessIcon";
 import {Component, createEffect, createMemo} from "solid-js";
-import {State, Props} from "./meta/types";
+import {ButtonState, Props} from "./meta/types";
 import {createStore} from "solid-js/store";
 
 const Index: Component<Props> = (props) => {
-  const [conf, setConf] = createStore<CaptchaConfig>({
+  const [conf, setConf] = createStore<ButtonConfig>({
     ...defaultConfig(),
   });
 
@@ -19,7 +25,7 @@ const Index: Component<Props> = (props) => {
     }));
   });
 
-  const [state, setState] = createStore<State>({
+  const [state, setState] = createStore<ButtonState>({
     disabled: false,
     type: "default",
     title: "点击按键进行验证",
@@ -62,19 +68,19 @@ const Index: Component<Props> = (props) => {
   const style = createMemo(() => ({
     "width": conf.width + "px",
     "height": conf.height + "px",
-    "padding-left": conf.verticalPadding + "px",
-    "padding-right": conf.verticalPadding + "px",
+    "padding-left": conf.horizontalPadding + "px",
+    "padding-right": conf.horizontalPadding + "px",
     "padding-top": conf.verticalPadding + "px",
     "padding-bottom": conf.verticalPadding + "px",
   }));
 
   return <div
-    class={`go-captcha buttonMode btnBlock ${type()}`}
-    classList={{"disabled" : state?.disabled}}
+    class={`go-captcha gc-button-mode gc-btn-block gc-${type()}`}
+    classList={{"gc-disabled" : state?.disabled}}
     style={style()}
     onClick={props.clickEvent}
   >
-    {type() == "default" ? <div class="ripple">{btnIcon()}</div> : btnIcon()}
+    {type() == "default" ? <div class="gc-ripple">{btnIcon()}</div> : btnIcon()}
     <span>{state?.title || "点击按键进行验证"}</span>
   </div>
 }

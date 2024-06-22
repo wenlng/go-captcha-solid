@@ -1,16 +1,22 @@
-import {CaptchaConfig} from "./config";
+/**
+ * @Author Awen
+ * @Date 2024/06/01
+ * @Email wengaolng@gmail.com
+ **/
+
+import {ButtonConfig} from "./config";
 
 export type ButtonType = "default" | "warn" | "error" | "success"
 
 export interface Props {
-  config?: CaptchaConfig;
+  config?: ButtonConfig;
   clickEvent?: () => void;
   disabled?: boolean;
   type?: ButtonType;
   title?: string;
 }
 
-export interface State {
+export interface ButtonState {
   disabled?: boolean;
   type?: ButtonType;
   title?: string;

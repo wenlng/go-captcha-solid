@@ -1,10 +1,10 @@
 /**
  * @Author Awen
- * @Date 2024/05/25
+ * @Date 2024/06/01
  * @Email wengaolng@gmail.com
  **/
 
-export interface CaptchaConfig {
+export interface RotateConfig {
   width?: number;
   height?: number;
   size?: number;
@@ -14,7 +14,7 @@ export interface CaptchaConfig {
   title?: string;
 }
 
-export const defaultConfig = ():CaptchaConfig => ({
+export const defaultConfig = ():RotateConfig => ({
   width: 300,
   height: 220,
   size: 220,
