@@ -150,7 +150,8 @@ const App: Component = () => {
         config={{
           width: widthValue()
         }}
-        type={typeValue()}/>
+        type={typeValue()}
+      />
       <br />
       <br />
     </div>
