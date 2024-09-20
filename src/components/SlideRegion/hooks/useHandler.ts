@@ -34,6 +34,7 @@ export const useHandler = (
     const maxHeight = height - tileHeight
 
     let isMoving = false
+    let tmpLeaveDragEvent: Event|any = null
     let startX = 0
     let startY = 0
     let tileLeft = 0
@@ -94,14 +95,7 @@ export const useHandler = (
         return
       }
       isMoving = false
-
-      containerRef.removeEventListener("mousemove", moveEvent, false)
-      // @ts-ignore
-      containerRef.removeEventListener("touchmove", moveEvent, { passive: false })
-
-      containerRef.removeEventListener( "mouseup", upEvent, false)
-      containerRef.removeEventListener( "mouseout", upEvent, false)
-      containerRef.removeEventListener("touchend", upEvent, false)
+      clearEvent()
 
       event.confirm && event.confirm({x: tileLeft, y: tileTop}, () => {
         clear()
@@ -111,11 +105,50 @@ export const useHandler = (
       e.preventDefault()
     }
 
+    const leaveDragBlockEvent = (e: Event|any) => {
+      tmpLeaveDragEvent = e
+    }
+
+    const enterDragBlockEvent = () => {
+      tmpLeaveDragEvent = null
+    }
+
+    const leaveUpEvent = (_: Event|any) => {
+      if(!tmpLeaveDragEvent) {
+        return
+      }
+
+      upEvent(tmpLeaveDragEvent)
+      clearEvent()
+    }
+
+    const clearEvent = () => {
+
+      containerRef.removeEventListener("mousemove", moveEvent, false)
+      // @ts-ignore
+      containerRef.removeEventListener("touchmove", moveEvent, { passive: false })
+
+      containerRef.removeEventListener( "mouseup", upEvent, false)
+      containerRef.removeEventListener( "mouseout", upEvent, false)
+      // containerRef.removeEventListener("touchend", upEvent, false)
+      containerRef.removeEventListener( "mouseenter", enterDragBlockEvent, false)
+      containerRef.removeEventListener( "mouseleave", leaveDragBlockEvent, false)
+      containerRef.removeEventListener("touchend", upEvent, false)
+
+      document.body.removeEventListener("mouseleave", upEvent, false)
+      document.body.removeEventListener("mouseup", leaveUpEvent, false)
+    }
+
     containerRef.addEventListener("mousemove", moveEvent, false)
     containerRef.addEventListener("touchmove", moveEvent, { passive: false })
     containerRef.addEventListener( "mouseup", upEvent, false)
-    containerRef.addEventListener( "mouseout", upEvent, false)
+    // containerRef.addEventListener( "mouseout", upEvent, false)
+    containerRef.addEventListener( "mouseenter", enterDragBlockEvent, false)
+    containerRef.addEventListener( "mouseleave", leaveDragBlockEvent, false)
     containerRef.addEventListener("touchend", upEvent, false)
+
+    document.body.addEventListener("mouseleave", upEvent, false)
+    document.body.addEventListener("mouseup", leaveUpEvent, false)
   }
 
   const closeEvent = (e: Event|any) => {

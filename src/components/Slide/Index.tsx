@@ -98,10 +98,12 @@ const Index: Component<Props> = (props: Props) => {
       </div>
     </div>
     <div class="gc-footer">
-      <div class="gc-drag-slide-bar" ref={dragBarRef} onMouseDown={handler.dragEvent}>
+      <div class="gc-drag-slide-bar" ref={dragBarRef}>
         <div class="gc-drag-line" />
-        <div class="gc-drag-block" ref={dragBlockRef} onTouchStart={handler.dragEvent} style={{left: handler.getState().dragLeft + "px"}}>
-          <ArrowsIcon />
+        <div class="gc-drag-block" ref={dragBlockRef} onMouseDown={handler.dragEvent} style={{left: handler.getState().dragLeft + "px"}}>
+          <div class="drag-block-inline" onTouchStart={handler.dragEvent}>
+            <ArrowsIcon/>
+          </div>
         </div>
       </div>
     </div>
