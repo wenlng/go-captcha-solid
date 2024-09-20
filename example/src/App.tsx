@@ -95,7 +95,7 @@ const App: Component = () => {
 
             setTimeout(() => {
               clear()
-            }, 1000)
+            }, 100)
           },
           refresh(): void {
             console.log("refresh >>>>>>>")
@@ -139,6 +139,13 @@ const App: Component = () => {
           refresh(): void {
             console.log("refresh >>>>>>>")
             setRotateData({...rotateData(), image: clickImage2})
+          },
+          confirm(point: any, clear: Function): void {
+            console.log("point >>>>>>>", point)
+
+            setTimeout(() => {
+              clear()
+            }, 100)
           },
           close(): void {
             console.log("close >>>>>>>")

@@ -1,6 +1,6 @@
 {
   "name": "go-captcha-solid-example",
-  "version": "1.0.0",
+  "version": "1.0.0d",
   "description": "Go Captcha Solid Examples ",
   "main": "index.js",
   "scripts": {
