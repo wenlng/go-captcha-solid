@@ -1,6 +1,11 @@
-import {Component, createSignal} from 'solid-js';
+import {Component, createEffect, createSignal, onMount} from 'solid-js';
 import {ButtonType} from "../../src/components/Button/meta/types";
 import GoCaptcha from '../../src';
+import {ClickRef} from "../../dist/types/components/Click";
+import {ClickEventType} from "../../src/components/Click/meta/event";
+import {SlideRef} from "../../src/components/Slide";
+import {SlideRegionRef} from "../../dist/types/components/SlideRegion";
+import {RotateRef} from "../../src/components/Rotate";
 // import GoCaptcha from './../../';
 
 const App: Component = () => {
@@ -19,6 +24,26 @@ const App: Component = () => {
     thumb: clickThumb,
   })
 
+  const [clickConfig, setClickConfig] = createSignal({
+    width: 300,
+    height: 220,
+  })
+
+  let clickRef: ClickRef | any;
+  onMount(() => {
+    // setTimeout(() => {
+    //   setClickConfig({...clickConfig, width: 500, height: 500})
+    // }, 2000)
+
+    setTimeout(() => {
+      // clickRef?.reset()
+      // clickRef?.clear()
+      // clickRef?.refresh()
+      // clickRef?.close()
+    }, 3000)
+  })
+
+  ////////////////////////////////
   const [slideData, setSlideData] = createSignal({
     thumbX: 20,
     thumbY: 20,
@@ -27,6 +52,27 @@ const App: Component = () => {
     image: slideImage,
     thumb: slideThumbImage,
   })
+
+  const [slideConfig, setSlideConfig] = createSignal({
+    width: 300,
+    height: 220,
+  })
+
+  let slideRef: SlideRef | any;
+  onMount(() => {
+    // setTimeout(() => {
+    //   setSlideConfig({...slideConfig, width: 500, height: 500})
+    // }, 2000)
+
+    setTimeout(() => {
+      // slideRef?.reset()
+      // slideRef?.clear()
+      // slideRef?.refresh()
+      // slideRef?.close()
+    }, 3000)
+  })
+
+  ///////////////////////////////////////////
 
   const [slideRegionData, setSlideRegionData] = createSignal({
     thumbX: 20,
@@ -37,10 +83,51 @@ const App: Component = () => {
     thumb: slideThumbImage,
   })
 
+  const [slideRegionConfig, setSlideRegionConfig] = createSignal({
+    width: 300,
+    height: 220,
+  })
+
+  let slideRegionRef: SlideRegionRef | any;
+  onMount(() => {
+    // setTimeout(() => {
+    //   setSlideRegionConfig({...slideRegionConfig, width: 500, height: 500})
+    // }, 2000)
+
+    setTimeout(() => {
+      // slideRegionRef?.reset()
+      // slideRegionRef?.clear()
+      // slideRegionRef?.refresh()
+      // slideRegionRef?.close()
+    }, 3000)
+  })
+
+  ///////////////////////////////////////////
+
   const [rotateData, setRotateData] = createSignal({
     angle: 20,
     image: rotateImage,
     thumb: rotateThumb,
+  })
+
+
+  const [rotateConfig, setRotateConfig] = createSignal({
+    width: 300,
+    height: 220,
+  })
+
+  let rotateRef: RotateRef | any;
+  onMount(() => {
+    // setTimeout(() => {
+    //   setRotateConfig({...rotateConfig, width: 500, height: 500})
+    // }, 2000)
+
+    setTimeout(() => {
+      // rotateRef?.reset()
+      // rotateRef?.clear()
+      // rotateRef?.refresh()
+      // rotateRef?.close()
+    }, 3000)
   })
 
 
@@ -82,6 +169,8 @@ const App: Component = () => {
             console.log("close >>>>>>>")
           }
         }}
+        config={clickConfig()}
+        ref={clickRef}
       />
       <br />
       <GoCaptcha.Slide
@@ -90,11 +179,11 @@ const App: Component = () => {
           move(x: number, y: number): void {
             console.log("move >>>>>>>", x, y)
           },
-          confirm(point: any, clear: Function): void {
+          confirm(point: any, reset: Function): void {
             console.log("point >>>>>>>", point)
 
             setTimeout(() => {
-              clear()
+              reset()
             }, 100)
           },
           refresh(): void {
@@ -105,6 +194,8 @@ const App: Component = () => {
             console.log("close >>>>>>>")
           }
         }}
+        config={slideConfig()}
+        ref={slideRef}
       />
       <br />
       <GoCaptcha.SlideRegion
@@ -113,11 +204,11 @@ const App: Component = () => {
           move(x: number, y: number): void {
             console.log("move >>>>>>>", x, y)
           },
-          confirm(point: any, clear: Function): void {
+          confirm(point: any, reset: Function): void {
             console.log("point >>>>>>>", point)
 
             setTimeout(() => {
-              clear()
+              reset()
             }, 100)
           },
           refresh(): void {
@@ -128,6 +219,8 @@ const App: Component = () => {
             console.log("close >>>>>>>")
           }
         }}
+        config={slideRegionConfig()}
+        ref={slideRegionRef}
       />
       <br />
       <GoCaptcha.Rotate
@@ -140,17 +233,19 @@ const App: Component = () => {
             console.log("refresh >>>>>>>")
             setRotateData({...rotateData(), image: clickImage2})
           },
-          confirm(point: any, clear: Function): void {
+          confirm(point: any, reset: Function): void {
             console.log("point >>>>>>>", point)
 
             setTimeout(() => {
-              clear()
+              reset()
             }, 100)
           },
           close(): void {
             console.log("close >>>>>>>")
           }
         }}
+        config={rotateConfig()}
+        ref={rotateRef}
       />
       <br />
       <GoCaptcha.Button

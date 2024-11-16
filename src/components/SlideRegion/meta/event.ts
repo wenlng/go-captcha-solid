@@ -4,11 +4,11 @@
  * @Email wengaolng@gmail.com
  **/
 
-import {SlidePoint} from "./data";
+import {SlideRegionPoint} from "./data";
 
-export interface SlideEvent {
+export interface SlideRegionEvent {
   move?: (x: number, y: number) => void;
   refresh?: () => void;
   close?: () => void;
-  confirm?: (point: SlidePoint, clear:(fn: Function) => void) => void;
+  confirm?: (point: SlideRegionPoint, reset:() => void) => void;
 }

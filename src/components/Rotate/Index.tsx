@@ -16,94 +16,165 @@ import RefreshIcon from './../../assets/icons/RefreshIcon'
 import LoadingIcon from './../../assets/icons/LoadingIcon'
 import ArrowsIcon from "../../assets/icons/ArrowsIcon";
 
+export interface RotateRef {
+  reset: () => void,
+  clear: () => void,
+  refresh: () => void,
+  close: () => void,
+}
+
 export interface Props {
   data: RotateData,
   config?: RotateConfig;
   events?: RotateEvent,
+  [x: string]: any,
 }
 
 const Index: Component<Props> = (props: Props) => {
-  const [conf, setConf] = createStore<RotateConfig>({
+  const [localConfig, setLocalConfig] = createStore<RotateConfig>({
     ...defaultConfig(),
   });
   createEffect(() => {
-    setConf((s) => ({
+    setLocalConfig((s) => ({
       ...s,
       ...(props.config || {}),
     }));
   });
 
-  const [data, setData] = createStore<RotateData>({
+  const [localData, setLocalData] = createStore<RotateData>({
     angle: 0,
     image: "",
     thumb: ""
   });
   createEffect(() => {
-    setData((s) => ({
+    setLocalData((s) => ({
       ...s,
       ...(props.data || {}),
     }));
   });
 
-  const [events, setEvents] = createStore<RotateEvent>({});
+  const [localEvents, setLocalEvents] = createStore<RotateEvent>({});
   createEffect(() => {
-    setEvents((s) => ({
+    setLocalEvents((s) => ({
       ...s,
       ...(props.events || {}),
     }));
   });
 
+  let rootRef: any = null
   let dragBarRef: any = null
   let dragBlockRef: any = null
 
-  const handler = useHandler(data, events);
+  const handler = useHandler(localData, localEvents, localConfig, () => {
+    setLocalData({...localData, image: '', thumb: '', angle: 0})
+  })
 
-  const hPadding = conf.horizontalPadding || 0
-  const vPadding = conf.verticalPadding || 0
-  const width = (conf.width || 0) + ( hPadding * 2) + (conf.showTheme ? 2 : 0)
+  const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0))
+  const hasDisplayImageState = createMemo(() => (localData.image != '' && localData.thumb != ''))
+  const size = createMemo(() => ((localConfig.size || 0) > 0 ? localConfig.size : defaultConfig().size))
 
-  const style = createMemo(() => ({
-    "width":  width+ "px",
-    "padding-left": hPadding + "px",
-    "padding-right": vPadding + "px",
-    "padding-top": vPadding + "px",
-    "padding-bottom": vPadding + "px",
-  }));
+  const style = createMemo(() => {
+    const hPadding = localConfig.horizontalPadding || 0
+    const vPadding = localConfig.verticalPadding || 0
+    const width = (localConfig.width || 0) + ( hPadding * 2) + (localConfig.showTheme ? 2 : 0)
+
+    return {
+      "width": width + "px",
+      "padding-left": hPadding + "px",
+      "padding-right": vPadding + "px",
+      "padding-top": vPadding + "px",
+      "padding-bottom": vPadding + "px",
+      "display": hasDisplayWrapperState() ? 'block' : 'none'
+    }
+  })
 
   onMount(() => {
-    handler.initRefs(dragBlockRef, dragBarRef)
+    handler.initRefs(rootRef, dragBlockRef, dragBarRef)
     dragBlockRef.addEventListener('dragstart', (event: any) => event.preventDefault());
   })
 
-  return <div class="go-captcha gc-wrapper gc-rotate-mode" classList={{"gc-theme": conf.showTheme}}
-              style={style()}>
+  return <div
+    class="go-captcha gc-wrapper gc-rotate-mode"
+    classList={{"gc-theme": localConfig.showTheme}}
+    style={style()}
+    ref={(el) => {
+      rootRef = el
+      props.ref({
+        current: el,
+        reset: handler.resetData,
+        clear: handler.clearData,
+        refresh: handler.refresh,
+        close: handler.close
+      })
+    }}
+  >
     <div class="gc-header">
-      <span>{conf.title}</span>
+      <span>{localConfig.title}</span>
       <div class="gc-icon-block">
-        <CloseIcon width={22} height={22} onClick={handler.closeEvent}/>
-        <RefreshIcon width={22} height={22} onClick={handler.refreshEvent}/>
+        <CloseIcon
+          width={localConfig.iconSize}
+          height={localConfig.iconSize} onClick={handler.closeEvent}
+        />
+        <RefreshIcon
+          width={localConfig.iconSize}
+          height={localConfig.iconSize}
+          onClick={handler.refreshEvent}
+        />
       </div>
     </div>
-    <div class="gc-body" style={{width: conf.size + 'px', height: conf.size + 'px'}}>
-      <div class="gc-loading">
-        <LoadingIcon />
-      </div>
+    <div
+      class="gc-body"
+      style={{
+        width: localConfig.width + 'px',
+        height: localConfig.height + 'px'
+      }}
+    >
+      <div style={{width: size()  + "px", height: size() + "px" }}>
+        <div class="gc-loading">
+          <LoadingIcon />
+        </div>
 
-      <div class="gc-picture" style={{width: conf.size + 'px', height: conf.size + 'px'}}>
-        <img classList={{"gc-hide": data.image == ""}} src={data.image} alt="..." />
-        <div class="gc-round" />
-      </div>
+        <div
+          class="gc-picture"
+          style={{
+            width: localConfig.size + 'px',
+            height: localConfig.size + 'px'
+          }}
+        >
+          <img
+            classList={{"gc-hide": localData.image == ""}}
+            src={localData.image}
+            style={{ display: hasDisplayImageState() ? 'block' : 'none' }}
+            alt=""
+          />
+          <div class="gc-round" />
+        </div>
 
-      <div class="gc-thumb">
-        <div class="gc-thumb-block" style={{ transform: `rotate(${handler.getState().thumbAngle}deg)`}}>
-          <img classList={{"gc-hide": data.thumb == ""}} src={data.thumb} alt="..." />
+        <div class="gc-thumb">
+          <div
+            class="gc-thumb-block"
+            style={{ transform: `rotate(${handler.state.thumbAngle()}deg)`}}
+          >
+            <img
+              classList={{"gc-hide": localData.thumb == ""}}
+              src={localData.thumb}
+              style={{ display: hasDisplayImageState() ? 'block' : 'none' }}
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
     <div class="gc-footer">
       <div class="gc-drag-slide-bar" ref={dragBarRef}>
         <div class="gc-drag-line" />
-        <div class="gc-drag-block" ref={dragBlockRef} onMouseDown={handler.dragEvent} style={{left: handler.getState().dragLeft + "px"}}>
+        <div
+          class="gc-drag-block"
+          ref={dragBlockRef}
+          onMouseDown={handler.dragEvent}
+          style={{left: handler.state.dragLeft() + "px"}}
+          classList={{"disabled": !hasDisplayImageState()}}
+        >
           <div class="drag-block-inline" onTouchStart={handler.dragEvent} >
             <ArrowsIcon />
           </div>

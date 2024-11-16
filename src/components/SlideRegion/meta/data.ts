@@ -4,7 +4,7 @@
  * @Email wengaolng@gmail.com
  **/
 
-export interface SlideData {
+export interface SlideRegionData {
   thumbX: number;
   thumbY: number;
   thumbWidth: number;
@@ -13,7 +13,7 @@ export interface SlideData {
   thumb: string;
 }
 
-export interface SlidePoint {
+export interface SlideRegionPoint {
   x: number,
   y: number,
 }

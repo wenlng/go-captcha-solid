@@ -38,3 +38,11 @@ export function checkTargetFather(that: any, e: any) {
 
   return parent !== that
 }
+
+export function proxyToObject(proxy: any) {
+  const result: any = {};
+  for (let key of Reflect.ownKeys(proxy)) {
+    result[key] = proxy[key];
+  }
+  return result;
+}
