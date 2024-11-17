@@ -1,8 +1,7 @@
-import {Component, createEffect, createSignal, onMount} from 'solid-js';
+import {Component, createSignal, onMount} from 'solid-js';
 import {ButtonType} from "../../src/components/Button/meta/types";
 import GoCaptcha from '../../src';
 import {ClickRef} from "../../dist/types/components/Click";
-import {ClickEventType} from "../../src/components/Click/meta/event";
 import {SlideRef} from "../../src/components/Slide";
 import {SlideRegionRef} from "../../dist/types/components/SlideRegion";
 import {RotateRef} from "../../src/components/Rotate";
