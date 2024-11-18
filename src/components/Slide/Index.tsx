@@ -6,7 +6,7 @@
 
 import {Component, createEffect, createMemo, onMount} from "solid-js";
 import {createStore} from "solid-js/store";
-import {SlideData} from "./meta/data";
+import {defaultSlideData, SlideData} from "./meta/data";
 import {SlideConfig, defaultConfig} from "./meta/config";
 import {SlideEvent} from "./meta/event";
 import {useHandler} from "./hooks/useHandler";
@@ -42,12 +42,7 @@ const Index: Component<Props> = (props: Props) => {
   });
 
   const [localData, setLocalData] = createStore<SlideData>({
-    thumbX: 0,
-    thumbY: 0,
-    thumbWidth: 0,
-    thumbHeight: 0,
-    image: "",
-    thumb: "",
+    ...defaultSlideData()
   });
   createEffect(() => {
     setLocalData((s) => ({
@@ -71,7 +66,7 @@ const Index: Component<Props> = (props: Props) => {
   let tileRef: any = null
 
   const handler = useHandler(localData, localEvents, localConfig, () => {
-    setLocalData({...localData, image: '', thumb: '', thumbX: 0, thumbY: 0, thumbHeight: 0, thumbWidth: 0})
+    setLocalData({...localData, ...defaultSlideData()})
   })
 
   const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0));
@@ -102,7 +97,7 @@ const Index: Component<Props> = (props: Props) => {
     style={style()}
     ref={(el) => {
       rootRef = el
-      props.ref({
+      props && props.ref && props.ref({
         current: el,
         reset: handler.resetData,
         clear: handler.clearData,

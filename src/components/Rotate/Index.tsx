@@ -8,7 +8,7 @@ import {Component, createEffect, createMemo, onMount} from "solid-js";
 import {createStore} from "solid-js/store";
 import {RotateConfig, defaultConfig} from "./meta/config";
 import {useHandler} from "./hooks/useHandler";
-import {RotateData} from "./meta/data";
+import {defaultRotateData, RotateData} from "./meta/data";
 import {RotateEvent} from "./meta/event";
 
 import CloseIcon from './../../assets/icons/CloseIcon'
@@ -42,9 +42,7 @@ const Index: Component<Props> = (props: Props) => {
   });
 
   const [localData, setLocalData] = createStore<RotateData>({
-    angle: 0,
-    image: "",
-    thumb: ""
+    ...defaultRotateData()
   });
   createEffect(() => {
     setLocalData((s) => ({
@@ -66,7 +64,7 @@ const Index: Component<Props> = (props: Props) => {
   let dragBlockRef: any = null
 
   const handler = useHandler(localData, localEvents, localConfig, () => {
-    setLocalData({...localData, image: '', thumb: '', angle: 0})
+    setLocalData({...localData, ...defaultRotateData()})
   })
 
   const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0))
@@ -99,7 +97,7 @@ const Index: Component<Props> = (props: Props) => {
     style={style()}
     ref={(el) => {
       rootRef = el
-      props.ref({
+      props && props.ref && props.ref({
         current: el,
         reset: handler.resetData,
         clear: handler.clearData,
@@ -129,7 +127,7 @@ const Index: Component<Props> = (props: Props) => {
         height: localConfig.height + 'px'
       }}
     >
-      <div style={{width: size()  + "px", height: size() + "px" }}>
+      <div class="gc-body-inner" style={{width: size()  + "px", height: size() + "px" }}>
         <div class="gc-loading">
           <LoadingIcon />
         </div>

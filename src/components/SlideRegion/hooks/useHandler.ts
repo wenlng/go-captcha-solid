@@ -106,7 +106,7 @@ export const useHandler = (
       isMoving = false
       clearEvent()
 
-      if (tileLeft <= 0 || tileTop <= 0) {
+      if (tileLeft < 0 || tileTop < 0) {
         return
       }
 

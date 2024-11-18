@@ -100,7 +100,7 @@ export const useHandler = (
       isMoving = false
       clearEvent()
 
-      if (currentAngle <= 0) {
+      if (currentAngle < 0) {
         return
       }
 

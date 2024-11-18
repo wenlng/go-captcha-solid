@@ -9,7 +9,7 @@ import {createStore} from "solid-js/store";
 
 import {SlideRegionConfig, defaultConfig} from "./meta/config";
 import {useHandler} from "./hooks/useHandler";
-import {SlideRegionData} from "./meta/data";
+import {defaultSlideRegionData, SlideRegionData} from "./meta/data";
 import {SlideRegionEvent} from "./meta/event";
 
 import CloseIcon from './../../assets/icons/CloseIcon'
@@ -42,12 +42,7 @@ const Index: Component<Props> = (props: Props) => {
   });
 
   const [localData, setLocalData] = createStore<SlideRegionData>({
-    thumbX: 0,
-    thumbY: 0,
-    thumbWidth: 0,
-    thumbHeight: 0,
-    image: "",
-    thumb: "",
+    ...defaultSlideRegionData(),
   });
   createEffect(() => {
     setLocalData((s) => ({
@@ -69,7 +64,7 @@ const Index: Component<Props> = (props: Props) => {
   let tileRef: any = null
 
   const handler = useHandler(localData, localEvents, localConfig, () => {
-    setLocalData({...localData, image: '', thumb: '', thumbX: 0, thumbY: 0, thumbHeight: 0, thumbWidth: 0})
+    setLocalData({...localData, ...defaultSlideRegionData()})
   });
 
   const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0));
@@ -101,7 +96,7 @@ const Index: Component<Props> = (props: Props) => {
     style={style()}
     ref={(el) => {
       rootRef = el
-      props.ref({
+      props && props.ref && props.ref({
         current: el,
         reset: handler.resetData,
         clear: handler.clearData,

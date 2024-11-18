@@ -65,7 +65,7 @@ const Index: Component<Props> = (props) => {
   });
 
   const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0));
-  const hasDisplayImageState = createMemo(() => (localData.image != '' && localData.thumb != ''));
+  const hasDisplayImageState = createMemo(() => (localData.image != '' || localData.thumb != ''));
 
   const style = createMemo(() => {
     const hPadding = localConfig.horizontalPadding || 0
@@ -88,7 +88,7 @@ const Index: Component<Props> = (props) => {
       classList={{"gc-theme": localConfig.showTheme}}
       style={style()}
       ref={(el) => {
-        props.ref({
+        props && props.ref && props.ref({
           current: el,
           reset: handler.resetData,
           clear: handler.clearData,

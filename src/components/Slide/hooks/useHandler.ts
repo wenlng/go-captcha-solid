@@ -41,6 +41,7 @@ export const useHandler = (
 
     const tileWith  = tileRef.offsetWidth
     const tileOffsetLeft = tileRef.offsetLeft
+    const containerMaxWidth = width - tileWith
     const tileMaxWith = width - (tileWith + tileOffsetLeft)
     const ratio = tileMaxWith / maxWidth
 
@@ -68,7 +69,7 @@ export const useHandler = (
       const ctX = tileOffsetLeft + (left * ratio)
       if (left >= maxWidth) {
         setDragLeft(maxWidth)
-        currentThumbX = maxWidth
+        currentThumbX = containerMaxWidth
         setThumbLeft(currentThumbX)
         return
       }
