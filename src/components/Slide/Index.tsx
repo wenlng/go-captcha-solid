@@ -4,7 +4,7 @@
  * @Email wengaolng@gmail.com
  **/
 
-import {Component, createEffect, createMemo, onMount} from "solid-js";
+import {Component, createEffect, createMemo, onCleanup, onMount} from "solid-js";
 import {createStore} from "solid-js/store";
 import {defaultSlideData, SlideData} from "./meta/data";
 import {SlideConfig, defaultConfig} from "./meta/config";
@@ -86,9 +86,14 @@ const Index: Component<Props> = (props: Props) => {
     }
   });
 
+  const fn = (event: any) => event.preventDefault()
   onMount(() => {
     handler.initRefs(rootRef, containerRef, tileRef, dragBlockRef, dragBarRef)
-    dragBlockRef.addEventListener('dragstart', (event: any) => event.preventDefault());
+    dragBlockRef.addEventListener('dragstart', fn)
+  })
+
+  onCleanup(() => {
+    dragBlockRef.removeEventListener('dragstart', fn)
   })
 
   return <div

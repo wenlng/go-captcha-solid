@@ -4,7 +4,7 @@
  * @Email wengaolng@gmail.com
  **/
 
-import {Component, createEffect, createMemo, onMount} from "solid-js";
+import {Component, createEffect, createMemo, onCleanup, onMount} from "solid-js";
 import {createStore} from "solid-js/store";
 
 import {SlideRegionConfig, defaultConfig} from "./meta/config";
@@ -85,10 +85,15 @@ const Index: Component<Props> = (props: Props) => {
     }
   });
 
+  const fn = (event: any) => event.preventDefault()
   onMount(() => {
     handler.initRefs(rootRef, containerRef, tileRef)
-    tileRef.addEventListener('dragstart', (event: any) => event.preventDefault());
+    tileRef.addEventListener('dragstart', fn)
   });
+
+  onCleanup(() => {
+    tileRef.removeEventListener('dragstart', fn)
+  })
 
   return <div
     class="go-captcha gc-wrapper gc-slide-mode"

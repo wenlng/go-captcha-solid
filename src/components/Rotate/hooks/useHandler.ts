@@ -24,7 +24,7 @@ export const useHandler = (
   const [thumbAngle, setThumbAngle] = createSignal<number>(data.angle || 0)
   const [isFreeze, setIsFreeze] = createSignal<boolean>(false)
 
-  createEffect(on([()=>data], () => {
+  createEffect(on([()=>data.angle], () => {
     if(!isFreeze()){
       setThumbAngle(data.angle || 0)
     }

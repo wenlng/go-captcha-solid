@@ -26,7 +26,7 @@ export const useHandler = (
   const [thumbLeft, setThumbLeft] = createSignal<number>(data.thumbX || 0)
   const [isFreeze, setIsFreeze] = createSignal<boolean>(false)
 
-  createEffect(on([()=>data], () => {
+  createEffect(on([() => data.thumbX], () => {
     if(!isFreeze()){
       setThumbLeft(data.thumbX || 0)
     }

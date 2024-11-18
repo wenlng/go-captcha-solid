@@ -24,12 +24,11 @@ export const useHandler = (
   const [thumbPoint, setThumbPoint] = createStore<SlideRegionPoint>({x: data.thumbX || 0, y: data.thumbY || 0})
   const [isFreeze, setIsFreeze] = createSignal<boolean>(false)
 
-  createEffect(on([()=>data], () => {
+  createEffect(on([() => data.thumbX, () => data.thumbY], () => {
     if(!isFreeze()){
       setThumbPoint({x: data.thumbX || 0, y: data.thumbY || 0})
     }
   }))
-
 
   const dragEvent = (e: Event|any) => {
     const touch = e.touches && e.touches[0];
