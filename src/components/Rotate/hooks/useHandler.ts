@@ -52,6 +52,10 @@ export const useHandler = (
     }
 
     const moveEvent = (e: Event|any) => {
+      if (!checkTargetFather(dragBarRef, e)) {
+        return
+      }
+
       isMoving = true
       const mTouche = e.touches && e.touches[0];
 
@@ -93,12 +97,12 @@ export const useHandler = (
         return
       }
 
+      clearEvent()
       if (!isMoving) {
         return
       }
 
       isMoving = false
-      clearEvent()
 
       if (currentAngle < 0) {
         return
