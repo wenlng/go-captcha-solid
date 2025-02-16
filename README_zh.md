@@ -250,9 +250,10 @@ interface Config {
 
 // data = {}
 interface Data {
-  angle: number;
+  angle?: number;
   image: string;
   thumb: string;
+  thumbSize: number;
 }
 
 // events = {}

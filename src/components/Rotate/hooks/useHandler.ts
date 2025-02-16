@@ -38,7 +38,7 @@ export const useHandler = (
     const blockWidth = dragBlockRef.offsetWidth
     const maxWidth = width - blockWidth
     const maxAngle = 360
-    const p = (maxAngle - data.angle) / maxWidth
+    const p = (maxAngle - (data.angle! || 0)) / maxWidth
 
     let angle = 0
     let isMoving = false
@@ -66,7 +66,7 @@ export const useHandler = (
         left = e.clientX - startX
       }
 
-      angle = data.angle + (left * p)
+      angle = (data.angle! || 0) + (left * p)
 
       if (left >= maxWidth) {
         setDragLeft(maxWidth)
@@ -77,7 +77,7 @@ export const useHandler = (
 
       if (left <= 0) {
         setDragLeft(0)
-        currentAngle = data.angle
+        currentAngle = data.angle || 0
         setThumbAngle(currentAngle)
         return
       }

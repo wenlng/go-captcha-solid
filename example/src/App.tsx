@@ -104,9 +104,9 @@ const App: Component = () => {
   ///////////////////////////////////////////
 
   const [rotateData, setRotateData] = createSignal({
-    angle: 20,
     image: rotateImage,
     thumb: rotateThumb,
+    thumbSize: 195,
   })
 
 

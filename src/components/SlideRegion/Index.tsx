@@ -68,7 +68,7 @@ const Index: Component<Props> = (props: Props) => {
   });
 
   const hasDisplayWrapperState = createMemo(() => ((localConfig.width || 0) > 0 || (localConfig.height || 0) > 0));
-  const hasDisplayImageState = createMemo(() => (localData.image != '' && localData.thumb != ''));
+  const hasDisplayImageState = createMemo(() => (localData.image && localData.image.length > 0) && (localData.thumb && localData.thumb.length > 0));
 
   const style = createMemo(() => {
     const hPadding = localConfig.horizontalPadding || 0

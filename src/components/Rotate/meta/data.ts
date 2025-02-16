@@ -5,13 +5,15 @@
  **/
 
 export interface RotateData {
-  angle: number;
+  angle?: number;
   image: string;
   thumb: string;
+  thumbSize: number;
 }
 
 export const defaultRotateData = () :RotateData => ({
   angle: 0,
   image: '',
-  thumb: ''
+  thumb: '',
+  thumbSize: 0,
 })
