@@ -1,7 +1,7 @@
 {
   "name": "go-captcha-solid",
   "version": "1.0.4",
-  "description": "GoCaptcha for Solid, which implements click mode, slider mode, drag-drop mode and rotation mode.",
+  "description": "GoCaptcha of Solid, which implements click mode, slider mode, drag-drop mode and rotation mode.",
   "email": "wengaolng@gmail.com",
   "author": "Awen <wengaolng@gmail.com>",
   "keywords": [
